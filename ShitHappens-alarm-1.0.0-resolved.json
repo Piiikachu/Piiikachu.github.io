@@ -1,0 +1,501 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "云闹钟需求接口文档",
+    "contact": {
+      "name": "王礼驰",
+      "email": "wanglichi@cmhi.chinamobile.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://devaicall.komect.com/{basePath}",
+      "description": "业务平台测试环境",
+      "variables": {
+        "basePath": {
+          "default": "fy/order/alarm"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "combo",
+      "description": "套餐信息"
+    },
+    {
+      "name": "event",
+      "description": "闹钟事件"
+    },
+    {
+      "name": "popup",
+      "description": "弹窗信息"
+    }
+  ],
+  "paths": {
+    "/combos": {
+      "get": {
+        "tags": [
+          "combo"
+        ],
+        "summary": "套餐订购页，获取可订购的套餐信息",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "query",
+            "description": "手机号",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComboResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/combo/{phone}": {
+      "get": {
+        "tags": [
+          "combo"
+        ],
+        "summary": "查询用户当前套餐",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "手机号",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserComboResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "combo"
+        ],
+        "summary": "订购套餐",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "手机号",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "comboId",
+            "in": "query",
+            "description": "套餐Id",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "combo"
+        ],
+        "summary": "退订套餐",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "手机号",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "comboId",
+            "in": "query",
+            "description": "套餐Id",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/popup/unregister": {
+      "get": {
+        "tags": [
+          "popup"
+        ],
+        "summary": "退订弹窗",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/event/{phone}": {
+      "get": {
+        "tags": [
+          "event"
+        ],
+        "summary": "获取闹钟事件列表",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "event"
+        ],
+        "summary": "新增闹钟事件",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "json": {
+              "schema": {
+                "$ref": "#/components/schemas/body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "event"
+        ],
+        "summary": "删除闹钟事件",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ComboResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "default": "success"
+          },
+          "combos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComboResult_combos"
+            }
+          }
+        }
+      },
+      "UserComboResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "default": "success"
+          },
+          "combos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserComboResult_combos"
+            }
+          }
+        }
+      },
+      "AlarmEvent": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "任务Id"
+          },
+          "phone": {
+            "type": "string",
+            "description": "手机号"
+          },
+          "repeatType": {
+            "type": "integer",
+            "description": "重复规则 1:仅一次 2:每日 3:每周 4:每月"
+          },
+          "repeatDay": {
+            "type": "string",
+            "description": "当重复类型选择 每周 时,选定周几,多选用逗号分隔,周日为0",
+            "example": "6,0,1"
+          },
+          "daytime": {
+            "type": "string",
+            "description": "闹钟执行时间 精确到分钟，如果是每日、每月、每周，只需要取分钟",
+            "example": "2021-12-12 08:30"
+          },
+          "targetType": {
+            "type": "integer",
+            "description": "目标设备类型 1:手机 2:音箱"
+          },
+          "targetNum": {
+            "type": "string",
+            "description": "目标信息 为手机号或者设备Id"
+          },
+          "contentType": {
+            "type": "integer",
+            "description": "闹钟类型 1：文本 2：语音"
+          },
+          "content": {
+            "type": "string",
+            "description": "文本或文件下载链接"
+          }
+        }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "default": "success"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "popupMsg": {
+            "type": "string",
+            "example": "您将退订12元年包套餐..."
+          },
+          "status": {
+            "type": "integer",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "default": "success"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlarmEvent"
+            }
+          },
+          "status": {
+            "type": "integer",
+            "default": 200
+          },
+          "msg": {
+            "type": "string",
+            "default": "success"
+          }
+        }
+      },
+      "body": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "$ref": "#/components/schemas/AlarmEvent"
+          }
+        }
+      },
+      "ComboResult_combos": {
+        "type": "object",
+        "properties": {
+          "comboId": {
+            "type": "integer",
+            "description": "套餐id"
+          },
+          "count": {
+            "type": "integer",
+            "description": "提醒次数"
+          },
+          "price": {
+            "type": "integer",
+            "description": "价格（元）"
+          },
+          "per": {
+            "type": "string",
+            "description": "month/year"
+          }
+        },
+        "description": "可选套餐"
+      },
+      "UserComboResult_combos": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "套餐提醒次数"
+          },
+          "remain": {
+            "type": "integer",
+            "description": "剩余提醒次数"
+          },
+          "expired": {
+            "type": "string",
+            "description": "套餐到期时间"
+          }
+        },
+        "description": "套餐"
+      }
+    }
+  }
+}
